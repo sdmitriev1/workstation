@@ -1,0 +1,5 @@
+---
+packages_taskfile_github_latest_release: https://api.github.com/repos/go-task/task/releases/latest
+packages_taskfile_package_name: "{{ ['task_', packages_taskfile_os, '_', packages_taskfile_arch, '.', packages_taskfiles_package_type] | join('') }}"
+packages_taskfile_os: "{{ ansible_system | lower }}"
+packages_taskfile_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
