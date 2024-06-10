@@ -1,0 +1,9 @@
+---
+- name: Install required packages
+  hosts: workstation
+  tasks:
+    - name: Import packages role
+      ansible.builtin.import_role:
+        name: packages
+      tags:
+        - packages
