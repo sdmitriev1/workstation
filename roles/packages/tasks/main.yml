@@ -1,0 +1,9 @@
+---
+- name: Import OS-specific variables
+  ansible.builtin.import_tasks:
+    file: "../../os_vars/tasks/main.yml"
+
+- name: Import package installation tasks for Debian
+  ansible.builtin.import_tasks:
+    file: "debian.yml"
+  when: ansible_os_family == "Debian"

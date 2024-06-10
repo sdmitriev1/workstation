@@ -1,0 +1,7 @@
+---
+- name: Install required packages
+  ansible.builtin.apt:
+    name: "{{ packages_to_install }}"
+    state: present
+    lock_timeout: "{{ packages_lock_timeout }}"
+  become: true
