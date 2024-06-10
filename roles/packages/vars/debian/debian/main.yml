@@ -8,5 +8,7 @@ packages_to_install:
   - build-essential
   - valgrind
   - tmux
+  - curl
+  - strace
 
 packages_lock_timeout: 180
