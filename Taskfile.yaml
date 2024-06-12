@@ -19,4 +19,9 @@ tasks:
     desc: Apply the workstation configuration
     cmds:
       - if [ ! -f "{{ .ROOT_DIR }}/{{ .VENV_DIR }}/bin/activate" ]; then task setup; fi
-      - source {{ .VENV_DIR }}/bin/activate && ansible-playbook -i inventory/hosts site.yml --ask-become
+      - source {{ .VENV_DIR }}/bin/activate && ansible-playbook -i inventory/hosts site.yml
+  upgrade:
+    desc: Upgrade the workstation configuration
+    cmds:
+      - if [ ! -f "{{ .ROOT_DIR }}/{{ .VENV_DIR }}/bin/activate" ]; then task setup; fi
+      - source {{ .VENV_DIR }}/bin/activate && ansible-playbook -i inventory/hosts site.yml -e packages_upgrade=true
