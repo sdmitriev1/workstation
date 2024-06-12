@@ -8,7 +8,13 @@
     file: "debian.yml"
   when: ansible_os_family == "Debian"
 
-- name: Import Taskfile installation tasks
-  ansible.builtin.import_tasks:
-    file: "taskfile.yml"
+- name: Import software installation tasks
   when: ansible_system == "Linux"
+  block:
+    - name: Import Taskfile installation tasks
+      ansible.builtin.import_tasks:
+        file: "taskfile.yml"
+
+    - name: Import Terraform installation tasks
+      ansible.builtin.import_tasks:
+        file: "terraform.yml"

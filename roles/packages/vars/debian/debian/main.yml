@@ -10,5 +10,8 @@ packages_to_install:
   - tmux
   - curl
   - strace
+  - gnupg
+  - software-properties-common
+  - unzip
 
 packages_lock_timeout: 180

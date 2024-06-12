@@ -1,5 +1,17 @@
 ---
-packages_taskfile_github_latest_release: https://api.github.com/repos/go-task/task/releases/latest
-packages_taskfile_package_name: "{{ ['task_', packages_taskfile_os, '_', packages_taskfile_arch, '.', packages_taskfiles_package_type] | join('') }}"
-packages_taskfile_os: "{{ ansible_system | lower }}"
-packages_taskfile_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
+packages_os: "{{ ansible_system | lower }}"
+packages_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
+
+packages_base_upgrade: "{{ packages_upgrade | default(false) }}"
+
+packages_taskfile_binary_path: /usr/bin/task
+packages_taskfile_upgrade: "{{ packages_upgrade | default(false) }}"
+packages_taskfile_github_latest_release_api: https://api.github.com/repos/go-task/task/releases/latest
+packages_taskfile_package_name: "{{ ['task_', packages_os, '_', packages_arch, '.', packages_taskfiles_package_type] | join('') }}"
+
+packages_terraform_path: /usr/local/bin/
+packages_terraform_binary_path: "{{ packages_terraform_path + 'terraform' }}"
+packages_terraform_upgrade: "{{ packages_upgrade | default(false) }}"
+packages_terraform_hashicorp_latest_release_api: https://checkpoint-api.hashicorp.com/v1/check/terraform
+packages_terraform_package_name_prefix: terraform_
+packages_terraform_package_name_postfix: "{{ ['_', packages_os, '_', packages_arch, '.zip'] | join('') }}"
