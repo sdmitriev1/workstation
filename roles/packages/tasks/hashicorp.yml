@@ -31,10 +31,10 @@
   become: true
   when: (not (item[0].item.stat.exists | bool)) or (packages_hashicorp_upgrade and item[2] not in item[0].stdout)
   loop: "{{ _hashicorp_installed_version.results | zip((_hashicorp_latest_release_data.results |
-         community.general.json_query(_query_url)),(_hashicorp_latest_release_data.results |
+         community.general.json_query(_query_url)), (_hashicorp_latest_release_data.results |
          community.general.json_query(_query_ver))) }}"
   loop_control:
-    label: "{{ item[0].item.item}}"
+    label: "{{ item[0].item.item }}"
   vars:
     _query_url: "[*].json.builds[?arch==`{{ packages_arch }}` && os==`{{ packages_os }}`].url"
     _query_ver: "[*].json.version"
