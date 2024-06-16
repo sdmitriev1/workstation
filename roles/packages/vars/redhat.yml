@@ -1,0 +1,5 @@
+---
+packages_taskfiles_package_type: rpm
+
+_packages_to_install:
+  - '@Development tools'
