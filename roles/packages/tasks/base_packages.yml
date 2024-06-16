@@ -1,0 +1,36 @@
+---
+- name: Debian base packages
+  when: ansible_os_family == "Debian"
+  become: true
+  block:
+    - name: Upgrade base packages for Debian systems
+      ansible.builtin.apt:
+        name: "*"
+        state: latest   # noqa package-latest
+        lock_timeout: "{{ packages_lock_timeout }}"
+        update_cache: true
+      when: packages_base_upgrade | bool
+
+    - name: Install base packages for Debian systems
+      ansible.builtin.apt:
+        name: "{{ packages_to_install + _packages_to_install }}"
+        state: present
+        lock_timeout: "{{ packages_lock_timeout }}"
+        update_cache: true
+
+- name: RedHat base packages
+  when: ansible_os_family == "RedHat"
+  become: true
+  block:
+    - name: Upgrade base packages for Red Hat systems
+      ansible.builtin.dnf:
+        name: "*"
+        state: latest   # noqa package-latest
+        lock_timeout: "{{ packages_lock_timeout }}"
+      when: packages_base_upgrade | bool
+
+    - name: Install base packages for Red Hat systems
+      ansible.builtin.dnf:
+        name: "{{ packages_to_install + _packages_to_install }}"
+        state: present
+        lock_timeout: "{{ packages_lock_timeout }}"

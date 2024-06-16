@@ -1,8 +1,18 @@
 ---
+packages_to_install:
+  - vim
+  - tree
+  - git
+  - valgrind
+  - tmux
+  - strace
+  - unzip
+
 packages_os: "{{ ansible_system | lower }}"
 packages_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"
 
 packages_base_upgrade: "{{ packages_upgrade | default(false) }}"
+packages_lock_timeout: 60
 
 packages_taskfile_binary_path: /usr/bin/task
 packages_taskfile_upgrade: "{{ packages_upgrade | default(false) }}"
