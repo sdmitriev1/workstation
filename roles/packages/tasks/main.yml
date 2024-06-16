@@ -17,4 +17,4 @@
 
     - name: Import Terraform installation tasks
       ansible.builtin.import_tasks:
-        file: "terraform.yml"
+        file: "hashicorp.yml"
