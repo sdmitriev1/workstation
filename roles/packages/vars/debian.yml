@@ -1,10 +1,15 @@
 ---
 packages_taskfiles_package_type: deb
-
 _packages_to_install:
-  - sudo
-  - python3.11-venv
+  - bat
   - build-essential
   - curl
+  - git
   - gnupg
+  - python3.11-venv
   - software-properties-common
+  - strace
+  - sudo
+  - unzip
+  - valgrind
+  - vim
