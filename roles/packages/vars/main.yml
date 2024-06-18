@@ -25,3 +25,8 @@ packages_hashicorp:
 packages_hashicorp_path: /usr/local/bin
 packages_hashicorp_upgrade: "{{ packages_upgrade | default(false) }}"
 packages_hashicorp_release_api: https://api.releases.hashicorp.com/v1/releases
+
+packages_argocd_binary_path: /usr/local/bin/argocd
+packages_argocd_upgrade: "{{ packages_upgrade | default(false) }}"
+packages_argocd_github_latest_release_api: https://api.github.com/repos/argoproj/argo-cd/releases/latest
+packages_argocd_package_name: "{{ ['argocd', packages_os, packages_arch] | join('-') }}"

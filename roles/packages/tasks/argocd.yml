@@ -1,0 +1,44 @@
+---
+- name: Check whether ArgoCD binary already presents on the target system
+  ansible.builtin.stat:
+    path: "{{ packages_argocd_binary_path }}"
+  register: _argocd_binary_stat
+
+- name: Get latest ArgoCD release information
+  ansible.builtin.uri:
+    url: "{{ packages_argocd_github_latest_release_api }}"
+  register: _argocd_latest_release
+  when: not _argocd_binary_stat.stat.exists or packages_argocd_upgrade
+
+- name: Determine installed and the latest ArgoCD versions
+  when: packages_argocd_upgrade
+  block:
+    - name: Get installed ArgoCD version
+      ansible.builtin.command:
+        cmd: "{{ packages_argocd_binary_path }} version"
+      register: _argocd_installed_version
+      changed_when: false
+      failed_when: false
+
+    - name: Define the latest ArgoCD version
+      ansible.builtin.set_fact:
+        _argocd_latest_version: "{{ _argocd_latest_release.json | community.general.json_query('name') }}"
+
+- name: Install ArgoCD
+  when: (not _argocd_binary_stat.stat.exists) or
+        (packages_argocd_upgrade and _argocd_latest_version not in _argocd_installed_version.stdout)
+  block:
+    - name: Define a URL of the latest ArgoCD package
+      ansible.builtin.set_fact:
+        _argocd_latest_url: "{{ _argocd_latest_release.json | community.general.json_query(_argocd_latest_release_query) }}"
+      vars:
+        _argocd_latest_release_query: "assets[?name==`{{ packages_argocd_package_name }}`].browser_download_url"
+
+    - name: Install the latest ArgoCD
+      ansible.builtin.get_url:
+        url: "{{ _argocd_latest_url[0] }}"
+        dest: "{{ packages_argocd_binary_path }}"
+        mode: "0555"
+        owner: root
+        group: root
+      become: true

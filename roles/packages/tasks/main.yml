@@ -17,3 +17,7 @@
     - name: Import Hashicorp installation tasks
       ansible.builtin.import_tasks:
         file: "hashicorp.yml"
+
+    - name: Import ArgoCD installation tasks
+      ansible.builtin.import_tasks:
+        file: "argocd.yml"
