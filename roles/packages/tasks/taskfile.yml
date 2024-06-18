@@ -18,6 +18,7 @@
         cmd: "{{ packages_taskfile_binary_path }} --version"
       register: _taskfile_installed_version
       changed_when: false
+      failed_when: false
 
     - name: Define a latest Taskfile version
       ansible.builtin.set_fact:
