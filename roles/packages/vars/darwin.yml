@@ -1,0 +1,35 @@
+---
+_packages_to_install:
+  - argocd
+  - awscli
+  - bat
+  - cfssl
+  - findutils
+  - gawk
+  - gnu-sed
+  - go-task
+  - grep
+  - helm
+  - htop
+  - kube-linter
+  - kube-ps1
+  - kubecolor
+  - kubectx
+  - kubernetes-cli
+  - kustomize
+  - openstackclient
+  - packer
+  - python@3.11
+  - python@3.12
+  - readline
+  - sshuttle
+  - tcptraceroute
+  - terraform
+  - tflint
+  - vault
+  - watch
+  - wget
+  - xz
+  - yamllint
+  - yq
+  - zsh-autosuggestions

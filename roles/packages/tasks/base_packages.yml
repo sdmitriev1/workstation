@@ -34,3 +34,18 @@
         name: "{{ packages_to_install + _packages_to_install }}"
         state: present
         lock_timeout: "{{ packages_lock_timeout }}"
+
+- name: MacOS base packages
+  when: ansible_system == "Darwin"
+  block:
+    - name: Update all the base packages on Mac OS systems
+      community.general.homebrew:
+        update_homebrew: true
+        upgrade_all: true
+      when: packages_base_upgrade | bool
+
+    - name: Install base packages on Mac OS systems
+      community.general.homebrew:
+        name: "{{ packages_to_install + _packages_to_install }}"
+        state: present
+        update_homebrew: true
