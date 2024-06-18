@@ -1,12 +1,11 @@
 ---
 packages_to_install:
-  - vim
-  - tree
-  - git
-  - valgrind
+  - ipcalc
+  - jq
+  - mtr
+  - nmap
   - tmux
-  - strace
-  - unzip
+  - tree
 
 packages_os: "{{ ansible_system | lower }}"
 packages_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else ansible_architecture }}"

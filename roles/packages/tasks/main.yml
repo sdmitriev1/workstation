@@ -7,13 +7,13 @@
   ansible.builtin.import_tasks:
     file: "base_packages.yml"
 
-- name: Import software installation tasks
+- name: Import Linux software installation tasks
   when: ansible_system == "Linux"
   block:
     - name: Import Taskfile installation tasks
       ansible.builtin.import_tasks:
         file: "taskfile.yml"
 
-    - name: Import Terraform installation tasks
+    - name: Import Hashicorp installation tasks
       ansible.builtin.import_tasks:
         file: "hashicorp.yml"
