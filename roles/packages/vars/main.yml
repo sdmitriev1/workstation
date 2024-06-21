@@ -1,5 +1,6 @@
 ---
 packages_to_install:
+  - bat
   - ipcalc
   - jq
   - mtr
