@@ -1,0 +1,24 @@
+---
+- name: Install binary packages from their Github repositories
+  github_package:
+    name: "{{ item.name }}"
+    repo: "{{ item.repo }}"
+    version_flag: "{{ item.version_flag }}"
+    state: present
+  become: true
+  when: not packages_github_upgrade | bool
+  loop: "{{ packages_github }}"
+  loop_control:
+    label: "{{ item.name}}"
+
+- name: Upgrade binary packages from their Github repositories
+  github_package:
+    name: "{{ item.name }}"
+    repo: "{{ item.repo }}"
+    version_flag: "{{ item.version_flag }}"
+    state: latest
+  become: true
+  when: packages_github_upgrade | bool
+  loop: "{{ packages_github }}"
+  loop_control:
+    label: "{{ item.name}}"

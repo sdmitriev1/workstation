@@ -2,3 +2,4 @@ ansible
 yamllint
 ansible-lint
 jmespath
+pylint

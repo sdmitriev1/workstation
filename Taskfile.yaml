@@ -14,7 +14,8 @@ tasks:
     desc: Perform basic linting of the source code
     cmds:
       - if [ ! -f "{{ .ROOT_DIR }}/{{ .VENV_DIR }}/bin/activate" ]; then task setup; fi
-      - source {{ .VENV_DIR }}/bin/activate && ansible-lint
+      - source {{ .VENV_DIR }}/bin/activate && pylint library/ || True
+      - source {{ .VENV_DIR }}/bin/activate && ANSIBLE_LIBRARY=library ansible-lint
   apply:
     desc: Apply the workstation configuration
     cmds:
