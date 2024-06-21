@@ -9,7 +9,7 @@
   when: not packages_github_upgrade | bool
   loop: "{{ packages_github }}"
   loop_control:
-    label: "{{ item.name}}"
+    label: "{{ item.name }}"
 
 - name: Upgrade binary packages from their Github repositories
   github_package:
@@ -21,4 +21,4 @@
   when: packages_github_upgrade | bool
   loop: "{{ packages_github }}"
   loop_control:
-    label: "{{ item.name}}"
+    label: "{{ item.name }}"
