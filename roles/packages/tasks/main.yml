@@ -10,14 +10,10 @@
 - name: Import Linux software installation tasks
   when: ansible_system == "Linux"
   block:
-    - name: Import Taskfile installation tasks
-      ansible.builtin.import_tasks:
-        file: "taskfile.yml"
-
     - name: Import Hashicorp installation tasks
       ansible.builtin.import_tasks:
         file: "hashicorp.yml"
 
-    - name: Import ArgoCD installation tasks
+    - name: Import Github binary installation tasks
       ansible.builtin.import_tasks:
-        file: "argocd.yml"
+        file: "github.yml"
