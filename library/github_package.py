@@ -95,13 +95,13 @@ class GithubPackage:
         urls = []
         for asset in assets:
             a = asset['name'].split('.')
-            if len(a) > 0 and all([x in a[0] for x in (self.name, system, arch)]):
-                if len(a) == 1 or any([x in a[-1] for x in ('gz',)]):
+            if len(a) > 0 and all(x in a[0] for x in (self.name, system, arch)):
+                if len(a) == 1 or any(x in a[-1] for x in ('gz',)):
                     urls.append(asset['browser_download_url'])
 
         if len(urls) == 0:
             self.failed = True
-            self.message = f"There are no installation candidates, aborting..."
+            self.message = "There are no installation candidates, aborting..."
             return None
         return sorted(urls)[0]
 
@@ -112,7 +112,11 @@ class GithubPackage:
 
     def _get_current_version_data(self):
         if self.current_version_data is None:
-            output = subprocess.run([self.full_path] + self.version_flag.split(), capture_output=True)
+            output = subprocess.run(
+                [self.full_path] + self.version_flag.split(),
+                capture_output=True,
+                check=False,
+            )
             if output.returncode != 0:
                 self.message = output.stderr
                 self.failed = True
@@ -132,14 +136,14 @@ class GithubPackage:
     def _present(self):
         if not self._is_package_installed():
             if self._install_latest_package() is None:
-                self._failed = True
+                self.failed = True
             self.changed = True
 
     def _latest(self):
         if (not self._is_package_installed() or
                 (self._is_package_installed() and not self._is_package_latest())):
             if self._install_latest_package() is None:
-                self._failed = True
+                self.failed = True
             self.changed = True
 
     def _absent(self):
@@ -151,35 +155,34 @@ class GithubPackage:
 
 def main():
     module = AnsibleModule(
-        argument_spec=dict(
-            name=dict(
-                required=True,
-                type='str',
-            ),
-            path=dict(
-                default='/usr/local/bin',
-                required=False,
-                type='path',
-            ),
-            repo=dict(
-                required=True,
-                type='str',
-            ),
-            state=dict(
-                default='present',
-                choices=[
+        argument_spec={
+            'name': {
+                'required': True,
+                'type': 'str',
+            },
+            'path': {
+                'default': '/usr/local/bin',
+                'type': 'path',
+            },
+            'repo': {
+                'required': True,
+                'type': 'str',
+            },
+            'state': {
+                'default': 'present',
+                'choices': [
                     'present',
                     'latest',
                     'absent',
                 ],
-            ),
-            version_flag=dict(
-                default='--version',
-                required=False,
-                type='str',
-            ),
-        ),
-        supports_check_mode=True,
+            },
+            'version_flag': {
+                'default': '--version',
+                'required': False,
+                'type': 'str',
+            },
+        },
+        supports_check_mode=False,
     )
 
     package_name = module.params.get('name')
