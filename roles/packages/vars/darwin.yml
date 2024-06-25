@@ -2,7 +2,6 @@
 _packages_to_install:
   - argocd
   - awscli
-  - bat
   - cfssl
   - findutils
   - gawk

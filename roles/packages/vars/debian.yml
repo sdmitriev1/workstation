@@ -1,7 +1,5 @@
 ---
-packages_taskfiles_package_type: deb
 _packages_to_install:
-  - bat
   - build-essential
   - curl
   - git
